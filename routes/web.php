@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tweet\CreateController;
 use App\Http\Controllers\Tweet\DeleteController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tweet\IndexController;
 use App\Http\Controllers\Tweet\Update\IndexController as UpdateIndexController;
 use App\Http\Controllers\Tweet\Update\PutController;
@@ -34,3 +34,9 @@ Route::put('/tweet/update/{tweetId}', PutController::class)->name('tweet.update.
 
 // tweetを削除する
 Route::delete('/tweet/delete/{tweetId}', DeleteController::class)->name('tweet.delete');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
