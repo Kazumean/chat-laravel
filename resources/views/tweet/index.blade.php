@@ -8,10 +8,11 @@
 </head>
 <body>
     <h1>つぶやきアプリ</h1>
+    @auth       
     <div>
         <p>投稿フォーム</p>
         @if (session('feedback.success'))
-            <p style="color: green">{{ session('feedback.success') }}</p>
+        <p style="color: green">{{ session('feedback.success') }}</p>
         @endif
         <form action="{{ route('tweet.create') }}" method="POST">
             @csrf
@@ -24,6 +25,7 @@
             <button type="submit">投稿</button>
         </form>
     </div>
+    @endauth
 
     <div>
     @foreach ($tweets as $tweet)
