@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tweet\CreateController;
 use App\Http\Controllers\Tweet\DeleteController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tweet\IndexController;
 use App\Http\Controllers\Tweet\Update\IndexController as UpdateIndexController;
 use App\Http\Controllers\Tweet\Update\PutController;
@@ -25,12 +25,22 @@ Route::get('/', function () {
 // tweetを表示する
 Route::get('/tweet', IndexController::class)->name('tweet.index');
 
-// tweetを投稿する
-Route::post('/tweet/create', CreateController::class)->name('tweet.create');
+Route::middleware('auth')->group(function() {
 
-// tweetを更新する
-Route::get('/tweet/update/{tweetId}', UpdateIndexController::class)->name('tweet.update.index');
-Route::put('/tweet/update/{tweetId}', PutController::class)->name('tweet.update.put');
+    // tweetを投稿する
+    Route::post('/tweet/create', CreateController::class)->name('tweet.create');
+    
+    // tweetを更新する
+    Route::get('/tweet/update/{tweetId}', UpdateIndexController::class)->name('tweet.update.index');
+    Route::put('/tweet/update/{tweetId}', PutController::class)->name('tweet.update.put');
+    
+    // tweetを削除する
+    Route::delete('/tweet/delete/{tweetId}', DeleteController::class)->name('tweet.delete');
 
-// tweetを削除する
-Route::delete('/tweet/delete/{tweetId}', DeleteController::class)->name('tweet.delete');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
