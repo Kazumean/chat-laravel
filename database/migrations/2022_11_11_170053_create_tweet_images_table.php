@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tweet_images', function (Blueprint $table) {
+            // Tweetsテーブルに存在するidでなければtweet_idに格納できない。
+            // Tweetsテーブルからレコードが削除された場合は、Tweet_imagesテーブルの紐づいたレコードも削除される。
             $table->foreignId('tweet_id')->constrained('tweets')->cascadeOnDelete();
+
+            // Imagesテーブルに存在するidでなければimage_idに格納できない。
+            // Imagesテーブルからレコードが削除された場合は、Tweetsテーブルの紐づいたレコードも削除される。
             $table->foreignId('image_id')->constrained('images')->cascadeOnDelete();
+            
             $table->timestamps();
         });
     }
