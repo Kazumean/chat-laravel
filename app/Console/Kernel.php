@@ -17,18 +17,21 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        // 毎分
-        $schedule->command('sample-command')->everyMinute()->emailOutputTo('info@example.com');
-        // 毎時
-        $schedule->command('sample-dommand')->hourly();
-        // 毎時８分
-        $schedule->command('sample-command')->hourlyAt(8);
-        // 毎日
-        $schedule->command('sample-command')->daily();
-        // 毎日13時
-        $schedule->command('sample-command')->dailyAt('13:00');
-        // 毎日3:15(cron表記)
-        $schedule->command('sample-command')->cron('15 3 * * *');
+        // // 毎分
+        // $schedule->command('sample-command')->everyMinute()->emailOutputTo('info@example.com');
+        // // 毎時
+        // $schedule->command('sample-dommand')->hourly();
+        // // 毎時８分
+        // $schedule->command('sample-command')->hourlyAt(8);
+        // // 毎日
+        // $schedule->command('sample-command')->daily();
+        // // 毎日13時
+        // $schedule->command('sample-command')->dailyAt('13:00');
+        // // 毎日3:15(cron表記)
+        // $schedule->command('sample-command')->cron('15 3 * * *');
+
+        //前日のつぶやき件数を取得し、毎日11時にメールを送信する.
+        $schedule->command('mail:send-daily-tweet-count-mail')->dailyAt('11:00');
     }
 
     /**

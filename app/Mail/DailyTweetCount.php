@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,29 +10,34 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DailyTweetCount extends Mailable
+class DailyTweetCount extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+
+    public User $toUser;
+    public int $count;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $toUser, int $count)
     {
-        //
+        $this->toUser = $toUser;
+        $this->count = $count;
     }
 
     /**
      * Get the message envelope.
      *
      * @return \Illuminate\Mail\Mailables\Envelope
+     * @return $this
      */
     public function envelope()
     {
         return new Envelope(
-            subject: 'Daily Tweet Count',
+            subject: '昨日は{$this->count}件のつぶやきが追加されました！',
         );
     }
 
@@ -43,7 +49,7 @@ class DailyTweetCount extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'email.daily_tweet_count',
         );
     }
 
