@@ -11,7 +11,7 @@ class TweetService
     // Tweetを取得して、投稿日時の降順に表示する.
     public function getTweets()
     {
-        return Tweet::orderBy('created_at', 'DESC')->get();
+        return Tweet::with('images')->orderBy('created_at', 'DESC')->get();
     }
 
     // 自分のTweetかどうかをチェックするメソッド.
