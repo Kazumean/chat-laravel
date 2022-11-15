@@ -1,11 +1,11 @@
 @props([
     'breadcrumbs' => [
         [
-            'href' => '/'
+            'href' => '/',
             'label' => 'TOP'
         ]
     ]
- ])
+])
  <nav class="text-black mx-4 my-3" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex">
         @foreach ($breadcrumbs as $breadcrumb)
