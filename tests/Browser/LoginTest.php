@@ -18,6 +18,7 @@ class LoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create(); // テスト用のユーザーを作成する
+            
             $browser->visit('/login')
                     ->type('email', $user->email) // メールアドレスを入力する
                     ->type('password', 'password') // パスワードを入力する
