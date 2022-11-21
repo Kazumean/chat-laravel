@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Modules\ImageUpload\CloudinaryImageManager;
+use App\Modules\ImageUpload\ImageManagerInterface;
+use App\Modules\ImageUpload\LocalImageManager;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
                 ],
             ]);
         });
+
+        if ($this->app->environment('production')) {
+            $this->app->bind(ImageManagerInterface::class, CloudinaryImageManager::class);
+        } else {
+            $this->app->bind(ImageManagerInterface::class, LocalImageManager::class);
+        }
     }
 
     /**
